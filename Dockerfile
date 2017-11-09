@@ -1,24 +1,24 @@
 FROM debian:jessie
-MAINTAINER ximenag@exo.com.ar
+MAINTAINER marco [dot] turi [at] hotmail [dot] it
 
 ENV DEBIAN_FRONTEND=noninteractive \
     ANDROID_HOME=/opt/android-sdk-linux \
-    NPM_VERSION=4.4.4 \
-    IONIC_VERSION=3.3.0 \
-    CORDOVA_VERSION=6.5.0 \
-    YARN_VERSION=0.24.6 \
+    NPM_VERSION=5.4.2 \
+    IONIC_VERSION=3.12.0 \
+    CORDOVA_VERSION=7.0.1 \
+    YARN_VERSION=1.1.0 \
     # Fix for the issue with Selenium, as described here:
     # https://github.com/SeleniumHQ/docker-selenium/issues/87
     DBUS_SESSION_BUS_ADDRESS=/dev/null
 
 # Install basics
 RUN apt-get update &&  \
-    apt-get install -y git wget curl unzip ruby build-essential xvfb && \
+    apt-get install -y git wget curl unzip ruby ruby-dev build-essential xvfb && \
     curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
     apt-get update &&  \
     apt-get install -y nodejs && \
     npm install -g npm@"$NPM_VERSION" cordova@"$CORDOVA_VERSION" ionic@"$IONIC_VERSION" yarn@"$YARN_VERSION" && \
-    npm cache clear && \
+    npm cache clear --force && \
     gem install sass scss_lint && \
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
     dpkg --unpack google-chrome-stable_current_amd64.deb && \
